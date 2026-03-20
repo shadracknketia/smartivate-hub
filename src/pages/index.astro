@@ -1,48 +1,205 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+
+// 1. Get all posts and sort them by newest first
+const allPosts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+// 2. Separate posts into Latest and Popular
+const latestPosts = allPosts.slice(0, 6); // Grab the 6 newest posts
+const popularPosts = allPosts.filter(post => post.data.isPopular).slice(0, 5); // Grab up to 5 popular posts
+
+// 3. Get unique categories for the sidebar
+const categories =[...new Set(allPosts.map((post) => post.data.category).filter(Boolean))];
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+
+			/* Override the default narrow layout for the homepage */
+			main {
+				width: 100%;
+				max-width: 100%;
+				padding: 2em 0;
+			}
+
+			/* Professional Blog Layout Styles */
+			.hero {
+				text-align: center;
+				padding: 3rem 0;
+				background: #f4f6f8;
+				margin-bottom: 2rem;
+				border-radius: 8px;
+			}
+			.blog-container {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 2rem;
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 0 1rem;
+			}
+			.main-content {
+				flex: 1;
+				min-width: 60%;
+			}
+			.sidebar {
+				width: 300px;
+				flex-shrink: 0;
+			}
+
+			/* Blog Post Cards */
+			.post-card {
+				display: flex;
+				flex-direction: column;
+				border: 1px solid #eaeaea;
+				border-radius: 12px;
+				overflow: hidden;
+				margin-bottom: 2rem;
+				text-decoration: none;
+				color: inherit;
+				transition: transform 0.2s, box-shadow 0.2s;
+			}
+			.post-card:hover {
+				transform: translateY(-4px);
+				box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+			}
+			.post-card img {
+				width: 100%;
+				height: 240px;
+				object-fit: cover;
+			}
+			.card-content {
+				padding: 1.5rem;
+			}
+			.card-content h3 {
+				margin: 0.5rem 0;
+				font-size: 1.5rem;
+			}
+			.card-content p {
+				color: #555;
+				margin: 0 0 1rem 0;
+			}
+			.category-badge {
+				display: inline-block;
+				background: #0056b3;
+				color: white;
+				padding: 0.2rem 0.6rem;
+				border-radius: 4px;
+				font-size: 0.8rem;
+				text-transform: uppercase;
+				font-weight: bold;
+			}
+			.post-date {
+				color: #888;
+				font-size: 0.9rem;
+			}
+
+			/* Sidebar Widgets */
+			.widget {
+				background: white;
+				border: 1px solid #eaeaea;
+				border-radius: 12px;
+				padding: 1.5rem;
+				margin-bottom: 2rem;
+			}
+			.widget h3 {
+				margin-top: 0;
+				border-bottom: 2px solid #0056b3;
+				padding-bottom: 0.5rem;
+				margin-bottom: 1rem;
+			}
+			.widget ul {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+			.widget li {
+				margin-bottom: 0.8rem;
+			}
+			.widget a {
+				text-decoration: none;
+				color: #333;
+				font-weight: 500;
+				transition: color 0.2s;
+			}
+			.widget a:hover {
+				color: #0056b3;
+			}
+
+			/* Mobile Responsiveness */
+			@media (max-width: 800px) {
+				.sidebar { width: 100%; }
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<section class="hero">
+				<h1>Welcome to {SITE_TITLE}</h1>
+				<p>Your go-to source for the latest in tech, tutorials, and insights.</p>
+			</section>
+
+			<div class="blog-container">
+				<!-- LEFT COLUMN: Latest Posts -->
+				<div class="main-content">
+					<h2>Latest Articles</h2>
+					{latestPosts.map((post) => (
+						<a href={`/blog/${post.id}/`} class="post-card">
+							{post.data.heroImage && <img src={post.data.heroImage} alt={post.data.title} />}
+							<div class="card-content">
+								{post.data.category && <span class="category-badge">{post.data.category}</span>}
+								<h3>{post.data.title}</h3>
+								<p>{post.data.description}</p>
+								<span class="post-date">
+									<FormattedDate date={post.data.pubDate} />
+								</span>
+							</div>
+						</a>
+					))}
+				</div>
+
+				<!-- RIGHT COLUMN: Sidebar -->
+				<aside class="sidebar">
+					<!-- Categories Widget -->
+					<div class="widget">
+						<h3>Categories</h3>
+						<ul>
+							{categories.map((category) => (
+								<li>
+									<a href={`/category/${category}`}>→ {category}</a>
+								</li>
+							))}
+						</ul>
+					</div>
+
+					<!-- Popular Posts Widget -->
+					<div class="widget">
+						<h3>Popular Posts</h3>
+						<ul>
+							{popularPosts.length > 0 ? (
+								popularPosts.map((post) => (
+									<li>
+										<a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+									</li>
+								))
+							) : (
+								<p>No popular posts yet!</p>
+							)}
+						</ul>
+					</div>
+				</aside>
+			</div>
 		</main>
 		<Footer />
 	</body>
