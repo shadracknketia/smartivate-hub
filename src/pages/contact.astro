@@ -1,21 +1,118 @@
 ---
-// This top section between the dashes is for writing JavaScript/Astro code.
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { SITE_TITLE } from '../consts';
+
+// REPLACE THESE WITH YOUR ACTUAL DETAILS
+const whatsappNumber = "233550782685"; // Format: CountryCode + Number (No + or 00)
+const telegramUsername = "sasmediagh"; 
+const contactEmail = "support@smartivatehub.com";
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={`Contact | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<BaseHead title={`Contact | ${SITE_TITLE}`} description="Get in touch for consultations and support." />
+		<style>
+			.contact-container { max-width: 800px; margin: 5rem auto; padding: 0 1rem; text-align: center; }
+			.contact-header h1 { font-size: 3rem; margin-bottom: 1rem; color: #0f172a; }
+			.contact-header p { font-size: 1.2rem; color: #64748b; margin-bottom: 4rem; }
+
+			.contact-stack { display: flex; flex-direction: column; gap: 2rem; align-items: center; }
+			
+			.contact-card { 
+				background: #ffffff; 
+				padding: 2.5rem; 
+				border-radius: 20px; 
+				border: 1px solid #e2e8f0; 
+				transition: transform 0.3s, box-shadow 0.3s;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				width: 100%;
+				max-width: 400px; /* Limits the width of the email card */
+			}
+			.contact-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+			
+			.icon-circle { 
+				width: 60px; 
+				height: 60px; 
+				border-radius: 50%; 
+				display: flex; 
+				align-items: center; 
+				justify-content: center; 
+				margin-bottom: 1.5rem;
+				font-size: 1.5rem;
+				color: white;
+			}
+
+			.email-icon { background: #4f46e5; }
+			.contact-card h3 { margin-bottom: 0.5rem; color: #0f172a; }
+			.contact-card p { color: #64748b; font-size: 0.95rem; margin-bottom: 1.5rem; }
+
+			.btn-contact { 
+				width: 100%; 
+				padding: 0.8rem; 
+				border-radius: 8px; 
+				text-decoration: none; 
+				font-weight: bold; 
+				color: white !important;
+				transition: opacity 0.2s;
+			}
+			.btn-email { background: #0f172a; }
+			.btn-wa { background: #25d366; }
+			.btn-tg { background: #0088cc; }
+			.btn-contact:hover { opacity: 0.9; }
+
+			/* Consultation Banner */
+			.consultation-banner { 
+				background: linear-gradient(135deg, #4f46e5 0%, #312e81 100%); 
+				color: white; 
+				padding: 3rem; 
+				border-radius: 20px; 
+				width: 100%;
+			}
+			.consultation-banner h2 { color: white; margin-bottom: 1rem; }
+			.consultation-banner p { color: #e2e8f0; margin-bottom: 2rem; }
+			
+			.button-group { display: flex; gap: 1rem; justify-content: center; }
+
+			@media (max-width: 700px) {
+				.button-group { flex-direction: column; }
+				.consultation-banner { padding: 2rem; }
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>Contact Me</h1>
-			<p>Have a question? Send me an email at hello@mydomain.com.</p>
+			<div class="contact-container">
+				<div class="contact-header">
+					<h1>Get in Touch</h1>
+					<p>Have a question about a tutorial or need professional help? We are here to assist you.</p>
+				</div>
+
+				<div class="contact-stack">
+					<!-- Email Card (Centered) -->
+					<div class="contact-card">
+						<div class="icon-circle email-icon">✉</div>
+						<h3>Email Support</h3>
+						<p>For general inquiries and collaboration requests.</p>
+						<a href={`mailto:${contactEmail}`} class="btn-contact btn-email">Send Email</a>
+					</div>
+
+					<!-- Big Consultation Section -->
+					<section class="consultation-banner">
+						<h2>1-on-1 Consultation</h2>
+						<p>Ready to scale your project or need help with AI & Automation? Book a direct session via WhatsApp or Telegram.</p>
+						<div class="button-group">
+							<a href={`https://wa.me/${whatsappNumber}`} class="btn-contact btn-wa" target="_blank">Chat on WhatsApp</a>
+							<a href={`https://t.me/${telegramUsername}`} class="btn-tg btn-contact" target="_blank">Message on Telegram</a>
+						</div>
+					</section>
+				</div>
+			</div>
 		</main>
 		<Footer />
 	</body>

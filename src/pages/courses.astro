@@ -1,0 +1,40 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Courses | ${SITE_TITLE}`} description="Structured tech courses." />
+		<style>
+			.course-featured { display: flex; gap: 3rem; background: #f8fafc; padding: 4rem; border-radius: 20px; max-width: 1200px; margin: 4rem auto; align-items: center; }
+			.course-badge { background: #4f46e5; color: white; padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
+			@media (max-width: 800px) { .course-featured { flex-direction: column; padding: 2rem; } }
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main style="padding: 0 1rem;">
+			<div style="text-align: center; margin-top: 4rem;">
+				<h1>Structured Learning</h1>
+				<p>Go deeper with our professional courses available on Udemy and beyond.</p>
+			</div>
+
+			<section class="course-featured">
+				<div style="flex: 1;">
+					<span class="course-badge">BESTSELLER</span>
+					<h2 style="font-size: 2.5rem; margin: 1rem 0;">Smartivate Masterclass</h2>
+					<p>Learn how to use modern tools effectively, build real projects, and automate workflows from scratch.</p>
+					<a href="#" class="promo-btn" style="display:inline-block; margin-top:2rem; background:#000; color:#fff; padding:1rem 2rem; border-radius:8px; text-decoration:none;">Join on Udemy</a>
+				</div>
+				<div style="flex: 1; background: #e2e8f0; height: 300px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #64748b;">
+					Course Trailer / Preview Image
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

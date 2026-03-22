@@ -1,0 +1,52 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Privacy Policy | ${SITE_TITLE}`} description="Privacy policy and data usage information." />
+		<style>
+			.legal-content { max-width: 800px; margin: 5rem auto; padding: 0 1rem; line-height: 1.6; color: #334155; }
+			.legal-content h1 { font-size: 2.5rem; color: #0f172a; margin-bottom: 2rem; }
+			.legal-content h2 { font-size: 1.5rem; color: #0f172a; margin-top: 2rem; }
+			.legal-content p { margin-bottom: 1rem; }
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<article class="legal-content">
+				<h1>Privacy Policy</h1>
+				<p>Last Updated: {new Date().toLocaleDateString()}</p>
+				
+				<p>At Smartivate Hub, accessible from yourdomain.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Smartivate Hub and how we use it.</p>
+
+				<h2>1. Log Files</h2>
+				<p>Smartivate Hub follows a standard procedure of using log files. These files log visitors when they visit websites. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks.</p>
+
+				<h2>2. Cookies and Web Beacons</h2>
+				<p>Like any other website, Smartivate Hub uses 'cookies'. These cookies are used to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.</p>
+
+				<h2>3. Google DoubleClick DART Cookie</h2>
+				<p>Google is one of a third-party vendor on our site. It also uses cookies, known as DART cookies, to serve ads to our site visitors based upon their visit to our site and other sites on the internet.</p>
+
+				<h2>4. Our Advertising Partners</h2>
+				<p>Some of advertisers on our site may use cookies and web beacons. Our advertising partners include:</p>
+				<ul>
+					<li><strong>Google AdSense</strong></li>
+				</ul>
+
+				<h2>5. Third Party Privacy Policies</h2>
+				<p>Smartivate Hub's Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information.</p>
+
+				<h2>6. Consent</h2>
+				<p>By using our website, you hereby consent to our Privacy Policy and agree to its Terms and Conditions.</p>
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>

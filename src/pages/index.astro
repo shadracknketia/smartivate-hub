@@ -6,16 +6,12 @@ import FormattedDate from '../components/FormattedDate.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { getCollection } from 'astro:content';
 
-// 1. Get all posts and sort them by newest first
 const allPosts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-// 2. Separate posts into Latest and Popular
-const latestPosts = allPosts.slice(0, 6); // Grab the 6 newest posts
-const popularPosts = allPosts.filter(post => post.data.isPopular).slice(0, 5); // Grab up to 5 popular posts
-
-// 3. Get unique categories for the sidebar
+const latestPosts = allPosts.slice(0, 6);
+const popularPosts = allPosts.filter(post => post.data.isPopular).slice(0, 5);
 const categories =[...new Set(allPosts.map((post) => post.data.category).filter(Boolean))];
 ---
 
@@ -24,122 +20,158 @@ const categories =[...new Set(allPosts.map((post) => post.data.category).filter(
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
-
-			/* Override the default narrow layout for the homepage */
+			/* Override the default narrow layout */
 			main {
 				width: 100%;
 				max-width: 100%;
 				padding: 2em 0;
 			}
+			
+			.hero { text-align: center; padding: 3rem 0; background: #f4f6f8; margin-bottom: 2rem; border-radius: 8px; }
+			
+			.blog-container { display: flex; flex-wrap: wrap; gap: 2rem; max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+			.main-content { flex: 1; min-width: 60%; }
+			.sidebar { width: 300px; flex-shrink: 0; }
 
-			/* Professional Blog Layout Styles */
-			.hero {
-				text-align: center;
-				padding: 3rem 0;
-				background: #f4f6f8;
-				margin-bottom: 2rem;
-				border-radius: 8px;
-			}
-			.blog-container {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				max-width: 1200px;
-				margin: 0 auto;
-				padding: 0 1rem;
-			}
-			.main-content {
-				flex: 1;
-				min-width: 60%;
-			}
-			.sidebar {
-				width: 300px;
-				flex-shrink: 0;
+			/* --- NEW COMPACT POST GRID --- */
+			.post-grid {
+				display: grid;
+				grid-template-columns: repeat(2, 1fr); /* Creates exactly 2 columns */
+				gap: 1.5rem;
 			}
 
-			/* Blog Post Cards */
 			.post-card {
 				display: flex;
 				flex-direction: column;
 				border: 1px solid #eaeaea;
 				border-radius: 12px;
 				overflow: hidden;
-				margin-bottom: 2rem;
 				text-decoration: none;
 				color: inherit;
 				transition: transform 0.2s, box-shadow 0.2s;
+				background: #ffffff;
 			}
 			.post-card:hover {
 				transform: translateY(-4px);
 				box-shadow: 0 10px 20px rgba(0,0,0,0.08);
 			}
+			
+			/* Smaller Images */
 			.post-card img {
 				width: 100%;
-				height: 240px;
+				height: 180px; /* Reduced from 240px for a more compact look */
 				object-fit: cover;
 			}
+			
 			.card-content {
-				padding: 1.5rem;
+				padding: 1.2rem;
+				display: flex;
+				flex-direction: column;
+				flex-grow: 1; /* Pushes the date to the bottom so all cards match height */
 			}
+			
 			.card-content h3 {
 				margin: 0.5rem 0;
-				font-size: 1.5rem;
+				font-size: 1.25rem; /* Slightly smaller title */
+				line-height: 1.3;
 			}
+			
+			/* Limit descriptions to exactly 2 lines */
 			.card-content p {
 				color: #555;
+				font-size: 0.95rem;
 				margin: 0 0 1rem 0;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
 			}
-			.category-badge {
-				display: inline-block;
-				background: #0056b3;
-				color: white;
-				padding: 0.2rem 0.6rem;
-				border-radius: 4px;
-				font-size: 0.8rem;
-				text-transform: uppercase;
-				font-weight: bold;
-			}
-			.post-date {
-				color: #888;
-				font-size: 0.9rem;
-			}
+			
+			.category-badge { display: inline-block; background: #4f46e5; color: white; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; font-weight: bold; align-self: flex-start; }
+			.post-date { color: #888; font-size: 0.85rem; margin-top: auto; }
 
 			/* Sidebar Widgets */
-			.widget {
-				background: white;
-				border: 1px solid #eaeaea;
-				border-radius: 12px;
-				padding: 1.5rem;
-				margin-bottom: 2rem;
-			}
-			.widget h3 {
-				margin-top: 0;
-				border-bottom: 2px solid #0056b3;
-				padding-bottom: 0.5rem;
-				margin-bottom: 1rem;
-			}
-			.widget ul {
-				list-style: none;
-				padding: 0;
-				margin: 0;
-			}
-			.widget li {
-				margin-bottom: 0.8rem;
-			}
-			.widget a {
-				text-decoration: none;
-				color: #333;
-				font-weight: 500;
-				transition: color 0.2s;
-			}
-			.widget a:hover {
-				color: #0056b3;
-			}
+			.widget { background: white; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+			.widget h3 { margin-top: 0; border-bottom: 2px solid #4f46e5; padding-bottom: 0.5rem; margin-bottom: 1rem; }
+			.widget ul { list-style: none; padding: 0; margin: 0; }
+			.widget li { margin-bottom: 0.8rem; }
+			.widget a { text-decoration: none; color: #333; font-weight: 500; transition: color 0.2s; }
+			.widget a:hover { color: #4f46e5; }
 
 			/* Mobile Responsiveness */
+			@media (max-width: 900px) {
+				.post-grid { grid-template-columns: 1fr; } /* Drops back to 1 column on tablets/phones */
+			}
 			@media (max-width: 800px) {
 				.sidebar { width: 100%; }
 			}
+
+
+			/* YouTube Widget Styling */
+			.youtube-widget .video-placeholder img {
+				width: 100%;
+				border-radius: 8px;
+				margin-bottom: 0.8rem;
+				border: 1px solid var(--border-color);
+			}
+
+			.youtube-widget p {
+				font-size: 0.9rem;
+				color: var(--text-muted);
+				line-height: 1.4;
+				margin-bottom: 1rem;
+			}
+
+			.btn-subscribe {
+				display: block;
+				text-align: center;
+				background: #ff0000; /* YouTube Red */
+				color: white !important;
+				text-decoration: none;
+				padding: 0.6rem;
+				border-radius: 6px;
+				font-weight: bold;
+				font-size: 0.9rem;
+				transition: background 0.2s;
+			}
+
+			.btn-subscribe:hover {
+				background: #cc0000;
+			}
+
+			/* Social Links Sidebar Styling */
+			.social-links-sidebar {
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+			}
+
+			.social-icon {
+				display: block;
+				padding: 0.5rem;
+				background: var(--bg-body);
+				border: 1px solid var(--border-color);
+				border-radius: 6px;
+				font-size: 0.9rem;
+				text-decoration: none;
+				color: var(--text-main) !important;
+				font-weight: 500;
+				transition: all 0.2s;
+			}
+
+			.social-icon:hover {
+				background: var(--accent);
+				color: white !important;
+				border-color: var(--accent);
+			}
+
+			.start-learning { padding: 4rem 1rem; background: #fff; text-align: center; }
+			.learning-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; max-width: 1200px; margin-left: auto; margin-right: auto; }
+			.learning-card { padding: 2rem; border: 1px solid var(--border-color); border-radius: 12px; transition: box-shadow 0.3s; }
+			.learning-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+			.learning-card h3 { color: var(--accent); margin-bottom: 1rem; }
+			.text-link { font-weight: bold; color: var(--accent); text-decoration: none; display: inline-block; margin-top: 1rem; }
+
 		</style>
 	</head>
 	<body>
@@ -150,54 +182,118 @@ const categories =[...new Set(allPosts.map((post) => post.data.category).filter(
 				<p>Your go-to source for the latest in tech, tutorials, and insights.</p>
 			</section>
 
+			<section class="start-learning">
+				<div class="container">
+					<h2>Start Learning</h2>
+					<p>Explore practical, beginner-friendly content designed to help you build real skills.</p>
+					
+					<div class="learning-grid">
+						<div class="learning-card">
+							<h3>Guides</h3>
+							<p>Understand concepts, tools, and workflows in a simple and clear way.</p>
+							<a href="/category/Guides" class="text-link">Explore Guides →</a>
+						</div>
+						<div class="learning-card">
+							<h3>Tutorials</h3>
+							<p>Follow step-by-step instructions to learn how to use tools and technologies.</p>
+							<a href="/category/Tutorials" class="text-link">Start Tutorials →</a>
+						</div>
+						<div class="learning-card">
+							<h3>Projects</h3>
+							<p>Build real-world applications and systems from scratch.</p>
+							<a href="/category/Projects" class="text-link">View Projects →</a>
+						</div>
+					</div>
+				</div>
+			</section>
+
 			<div class="blog-container">
-				<!-- LEFT COLUMN: Latest Posts -->
+				<!-- LEFT COLUMN: Latest Posts Grid -->
 				<div class="main-content">
-					<h2>Latest Articles</h2>
-					{latestPosts.map((post) => (
-						<a href={`/blog/${post.id}/`} class="post-card">
-							{post.data.heroImage && <img src={post.data.heroImage} alt={post.data.title} />}
-							<div class="card-content">
-								{post.data.category && <span class="category-badge">{post.data.category}</span>}
-								<h3>{post.data.title}</h3>
-								<p>{post.data.description}</p>
-								<span class="post-date">
-									<FormattedDate date={post.data.pubDate} />
-								</span>
-							</div>
-						</a>
-					))}
+					<h2 style="margin-bottom: 1.5rem;">Latest Articles</h2>
+					
+					<!-- New Grid Wrapper -->
+					<div class="post-grid">
+						{latestPosts.map((post) => (
+							<a href={`/blog/${post.id}/`} class="post-card">
+								{post.data.heroImage ? (
+									<img src={post.data.heroImage} alt={post.data.title} />
+								) : (
+									<div style="height: 180px; background: #e2e8f0; display: flex; align-items: center; justify-content: center; color: #64748b;">No Image</div>
+								)}
+								<div class="card-content">
+									{post.data.category && <span class="category-badge">{post.data.category}</span>}
+									<h3>{post.data.title}</h3>
+									<p>{post.data.description}</p>
+									<span class="post-date">
+										<FormattedDate date={post.data.pubDate} />
+									</span>
+								</div>
+							</a>
+						))}
+					</div>
 				</div>
 
 				<!-- RIGHT COLUMN: Sidebar -->
 				<aside class="sidebar">
-					<!-- Categories Widget -->
+					
+					<!-- 📺 NEW: YouTube Widget -->
+					<div class="widget youtube-widget">
+						<h3>YouTube Channel</h3>
+						<div class="video-placeholder">
+							<!-- Replace this URL with your actual YouTube Banner or a screen grab of your channel -->
+							<img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=300&auto=format&fit=crop" alt="YouTube Channel" />
+						</div>
+						<p>Subscribe for weekly tech tutorials and coding deep-dives.</p>
+						<a href="https://youtube.com/@sasmediastudio" target="_blank" class="btn-subscribe">
+							Subscribe Now
+						</a>
+					</div>
+
+					<!-- Consultation Widget -->
+					<div class="widget" style="background: #4f46e5; color: white; border: none;">
+						<h3 style="color: white; border-color: white;">Book a Consultation</h3>
+						<p style="font-size: 0.9rem; margin-bottom: 1.5rem;">Need expert advice on AI, Automation, or Tech? Let's chat directly.</p>
+						<div class="social-links-sidebar">
+							<a href="https://wa.me/233550782685" class="social-icon" style="background: #25d366; color: white !important; border: none; text-align: center;">Chat on WhatsApp</a>
+							<a href="https://t.me/sasmediagh" class="social-icon" style="background: #0088cc; color: white !important; border: none; text-align: center;">Message on Telegram</a>
+						</div>
+					</div>
+
+					<!-- Existing Categories Widget -->
 					<div class="widget">
 						<h3>Categories</h3>
 						<ul>
 							{categories.map((category) => (
-								<li>
-									<a href={`/category/${category}`}>→ {category}</a>
-								</li>
+								<li><a href={`/category/${category}`}>→ {category}</a></li>
 							))}
 						</ul>
 					</div>
 
-					<!-- Popular Posts Widget -->
+					<!-- Existing Popular Posts Widget -->
 					<div class="widget">
 						<h3>Popular Posts</h3>
 						<ul>
 							{popularPosts.length > 0 ? (
 								popularPosts.map((post) => (
-									<li>
-										<a href={`/blog/${post.slug}/`}>{post.data.title}</a>
-									</li>
+									<li><a href={`/blog/${post.id}/`}>{post.data.title}</a></li>
 								))
 							) : (
 								<p>No popular posts yet!</p>
 							)}
 						</ul>
 					</div>
+
+					<!-- 📱 NEW: Social Media Widget -->
+					<div class="widget">
+						<h3>Follow Me</h3>
+						<div class="social-links-sidebar">
+							<a href="https://twitter.com/yourhandle" class="social-icon">𝕏 (Twitter)</a>
+							<a href="https://linkedin.com/in/yourprofile" class="social-icon">LinkedIn</a>
+							<a href="https://github.com/yourusername" class="social-icon">GitHub</a>
+						</div>
+					</div>
+
 				</aside>
 			</div>
 		</main>

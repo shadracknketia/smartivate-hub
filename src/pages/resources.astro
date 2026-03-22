@@ -1,0 +1,44 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Resources | ${SITE_TITLE}`} description="Free templates and scripts." />
+		<style>
+			.resource-section { max-width: 900px; margin: 4rem auto; padding: 0 1rem; }
+			.resource-list { list-style: none; padding: 0; }
+			.resource-item { display: flex; justify-content: space-between; padding: 1.5rem; border-bottom: 1px solid #e2e8f0; align-items: center; }
+			.download-link { color: #4f46e5; font-weight: bold; text-decoration: none; }
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="resource-section">
+				<h1>Free Resources</h1>
+				<p>Access free tools, templates, and learning materials to help you move faster.</p>
+				
+				<ul class="resource-list" style="margin-top: 3rem;">
+					<li class="resource-item">
+						<div><strong>Automation Script Library</strong><br><small>Python & JS scripts for daily tasks</small></div>
+						<a href="#" class="download-link">Download ↓</a>
+					</li>
+					<li class="resource-item">
+						<div><strong>Project Planning Template</strong><br><small>Notion & Excel templates</small></div>
+						<a href="#" class="download-link">Download ↓</a>
+					</li>
+					<li class="resource-item">
+						<div><strong>Workflow Guide PDF</strong><br><small>Step-by-step AI workflows</small></div>
+						<a href="#" class="download-link">Download ↓</a>
+					</li>
+				</ul>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
