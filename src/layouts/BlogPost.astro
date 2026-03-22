@@ -133,6 +133,35 @@ const postUrl = `${siteUrl}${Astro.url.pathname}`;
 					)}
 					
 				</div>
+
+				<!-- 📚 NEW: Related Posts -->
+					{relatedPosts.length > 0 && (
+						<div class="related-section">
+							<!-- ... your related posts code ... -->
+						</div>
+					)}
+
+					<!-- 💬 NEW: Giscus Comments -->
+					<div class="comments-section" style="margin-top: 4rem; padding-top: 3rem; border-top: 2px solid var(--border-color);">
+						<h2>Comments</h2>
+						<script src="https://giscus.app/client.js"
+								data-repo="shadracknketia/smartivate-hub"
+								data-repo-id="R_kgDORskGfQ"
+								data-category="[ENTER CATEGORY NAME HERE]"
+								data-category-id="[ENTER CATEGORY ID HERE]"
+								data-mapping="pathname"
+								data-strict="0"
+								data-reactions-enabled="1"
+								data-emit-metadata="0"
+								data-input-position="bottom"
+								data-theme="light"
+								data-lang="en"
+								crossorigin="anonymous"
+								async>
+						</script>
+					</div>
+
+				</div> 
 			</article>
 		</main>
 		<Footer />
