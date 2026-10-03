@@ -11,6 +11,12 @@ What if you could get paid for creating short videos without having millions of 
 
 In this guide, you'll learn what content rewards are, how the model works, what clipping means, and how AI makes the process faster. You'll also get a practical workflow you can follow to participate.
 
+Prefer watching? Here's the full video walkthrough:
+
+<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
+  <iframe src="https://www.youtube.com/embed/sa75jzvtKRE" title="Content Rewards Explained: How the Clipping Economy Pays Creators" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe>
+</div>
+
 ## What Are Content Rewards?
 
 Content rewards is a marketplace that connects **brands** with **content creators**. Brands need attention, and creators need opportunities. Short-form video connects the two.
@@ -80,7 +86,7 @@ Here's a beginner-friendly process to get started:
 2. **Read the requirements** and rules in full.
 3. **Choose your source video** from the campaign materials.
 4. **Use an AI tool** to identify the strongest moments in the video.
-5. **Trim each moment** into a 30–60 second clip.
+5. **Trim each moment** into a 30-60 second clip.
 6. **Add a strong hook and captions** that fit the campaign's guidelines.
 7. **Publish on a supported platform** and follow any posting rules.
 8. **Review your results** and use what performed best to improve your next clips.
