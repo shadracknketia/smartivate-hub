@@ -11,7 +11,7 @@ What if you could get paid for creating short videos without having millions of 
 
 In this guide, you'll learn what content rewards are, how the model works, what clipping means, and how AI makes the process faster. You'll also get a practical workflow you can follow to participate.
 
-Prefer watching? Here's the full video walkthrough:
+Watch the full video walkthrough:
 
 <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
   <iframe src="https://www.youtube.com/embed/sa75jzvtKRE?si=hr6cabI2-_R6ggvI" title="Content Rewards Explained: How the Clipping Economy Pays Creators" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allowfullscreen></iframe>
