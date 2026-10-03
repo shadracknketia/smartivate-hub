@@ -2,4 +2,4 @@
 // You can import this data from anywhere in your site by using the `import` keyword.
 
 export const SITE_TITLE = 'Smartivate Hub';
-export const SITE_DESCRIPTION = 'Master modern technology and AI with Smartivate Hub. Explore beginner-friendly guides, step-by-step tutorials, and real-world projects designed to help you build, automate, and grow your digital skills.';
+export const SITE_DESCRIPTION = 'Free tutorials on AI-powered SaaS, lead generation, and automated cold email outreach — SMTP setup, AI scraping, and automation with n8n, Make, and Zapier. The written companion to the Smartivate YouTube channel.';

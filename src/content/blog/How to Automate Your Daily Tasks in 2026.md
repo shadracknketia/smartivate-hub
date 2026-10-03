@@ -34,7 +34,7 @@ If you are writing custom scripts, here is a quick Python example to ping an API
 import requests
 
 def get_data():
-    response = requests.get("https://api.smartivatehub.com/data")
+    response = requests.get("https://api.smartivate.blog/data")
     return response.json()
 
 
