@@ -34,10 +34,10 @@ Because this is a front-end website, you don't need a back end. That keeps the s
 
 Here are the four tools and what each one does:
 
-- **[VS Code](AFFILIATE_LINK: https://code.visualstudio.com/Download?_exp_download=fb315fc982)** is the text editor where you paste and save your code.
-- **[Gemini](AFFILIATE_LINK: https://gemini.google.com/)** is the AI assistant that writes the code and guides you step by step.
-- **[GitHub](AFFILIATE_LINK: https://github.com/)** stores your website files in a repository (think of it as a container).
-- **[Vercel](AFFILIATE_LINK: https://vercel.com/)** hosts your site and puts it online.
+- **[VS Code](https://code.visualstudio.com/Download?_exp_download=fb315fc982)** is the text editor where you paste and save your code.
+- **[Gemini](https://gemini.google.com)** is the AI assistant that writes the code and guides you step by step.
+- **[GitHub](https://github.com)** stores your website files in a repository (think of it as a container).
+- **[Vercel](https://vercel.com)** hosts your site and puts it online.
 
 > **Pro Tip:** You can use any text editor, even Notepad. VS Code is recommended because it makes working with multiple files much easier.
 
