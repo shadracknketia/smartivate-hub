@@ -149,7 +149,7 @@ After a short wait, you'll see a success message and a live subdomain. Open it, 
 
 A subdomain works for testing, but a custom domain looks far more professional for a business or brand.
 
-1. Buy a domain from a registrar such as [GoDaddy](AFFILIATE_LINK: https://www.godaddy.com).
+1. Buy a domain from a registrar such as [GoDaddy](https://www.godaddy.com).
 2. In Vercel, go to **Domains**, click **Add Existing**, and enter your domain.
 3. Vercel will show the DNS records you need to add.
 4. In your registrar's DNS settings, add an **A record** with the name `@` and the IP address Vercel shows you.
